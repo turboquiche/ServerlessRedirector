@@ -1,0 +1,25 @@
+service: lambda-front
+
+frameworkVersion: "^3.35.2"
+
+provider:
+  name: aws
+  region: us-east-2
+  profile: default
+  runtime: provided.al2
+  stage: api
+  environment:
+    TEAMSERVER: "https://TEAMSERVER.COM"
+
+package:
+  patterns:
+    - '!./**'
+    - ./bootstrap
+
+functions:
+  redirector:
+    handler: bootstrap
+    events:
+      - http:
+          path: /{all+}
+          method: any
